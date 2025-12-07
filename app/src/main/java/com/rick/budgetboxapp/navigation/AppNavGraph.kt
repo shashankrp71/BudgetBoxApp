@@ -1,6 +1,7 @@
 package com.rick.budgetboxapp.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,9 +18,11 @@ sealed class Screen(val route: String){
 
 
 @Composable
-fun AppNavGraph(){
+fun AppNavGraph(
+    startDestination: String = Screen.Auth.route
+){
     val nav = rememberNavController()
-    NavHost(navController = nav, startDestination = Screen.Auth.route){
+    NavHost(navController = nav, startDestination = startDestination){
         composable(Screen.Auth.route) {
             AuthScreen(
                 onLoginSuccess = {
