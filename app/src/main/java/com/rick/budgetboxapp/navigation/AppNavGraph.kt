@@ -41,7 +41,11 @@ fun AppNavGraph(
             )
         }
         composable (Screen.AddExpense.route){
-            AddExpenseScreen()
+            AddExpenseScreen(
+                onSaved = {
+                    nav.navigate(Screen.Home.route)
+                }
+            )
         }
         composable (Screen.ScanExpense.route){
             ScanReceiptScreen (

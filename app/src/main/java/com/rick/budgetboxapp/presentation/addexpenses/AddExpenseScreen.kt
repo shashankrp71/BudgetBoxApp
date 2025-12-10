@@ -111,7 +111,7 @@ fun AddExpenseScreen(
                     val amount = amountStr.toDoubleOrNull() ?: 0.0
                     if (title.isNotBlank() && amount > 0.0) {
                         vm.addExpense(title, amount, category)
-                        onSaved?.invoke()
+                        onSaved
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
