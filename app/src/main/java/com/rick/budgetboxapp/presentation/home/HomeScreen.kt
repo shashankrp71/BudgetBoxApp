@@ -16,6 +16,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,22 +29,36 @@ import java.util.*
 @Composable
 fun HomeScreen(
     onAddExpense: () -> Unit,
+    onScan:() -> Unit,
     vm: ExpenseViewModel = hiltViewModel()
 ) {
     val expenses = vm.expenses.collectAsState().value
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("BudgetBox") }, actions = {
-                TextButton(onClick = { vm.syncPending() }) { Text("Sync") }
-            })
+            TopAppBar(title = { Text("BudgetBox") })
         },
         floatingActionButton = {
-            ExtendedFloatingActionButton(
-                text = { Text("Add") },
-                icon = { Icon(Icons.Default.Add, contentDescription = "Add") },
-                onClick = onAddExpense
-            )
+            Column {
+                ExtendedFloatingActionButton(
+                    text = { Text("Add") },
+                    icon = { Icon(Icons.Default.Add, contentDescription = "Add") },
+                    onClick = onAddExpense
+                )
+                Spacer(modifier = Modifier.padding(12.dp))
+                ExtendedFloatingActionButton(
+                    text = { Text("Scan")},
+                    icon = { Icon(Icons.Default.ExitToApp, contentDescription = "Scan")},
+                    onClick = onScan
+                )
+                Spacer(modifier = Modifier.padding(12.dp))
+                ExtendedFloatingActionButton(
+                    text = { Text("Sync")},
+                    icon = { Icon(Icons.Default.Refresh, contentDescription = "Sync")},
+                    onClick = { vm.syncPending() }
+                )
+
+            }
         }
     ) { padding ->
         if (expenses.isEmpty()) {
@@ -53,7 +69,7 @@ fun HomeScreen(
                 Text("No expenses yet. Tap Add to create one.", modifier = Modifier.padding(16.dp))
             }
         } else {
-            LazyColumn(modifier = Modifier.padding(padding)) {
+            LazyColumn(modifier = Modifier.padding(12.dp)) {
                 items(expenses) { item ->
                     ExpenseRow(item.title, item.amount, item.category, item.timestamp)
                 }

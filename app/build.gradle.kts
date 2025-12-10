@@ -99,4 +99,8 @@ dependencies {
 
     // Coil (images)
     implementation("io.coil-kt:coil-compose:2.5.0")
+
+    // mlkit
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
+
 }
